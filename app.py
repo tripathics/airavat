@@ -17,14 +17,14 @@ Session(app)
 def index():
     return render_template("index.html")
 
-@app.route("/admin", methods=["GET", "POST"])
+@app.route("/admin")
 @login_required
 def admin():
-    if (request.method == "GET"):
-        return render_template("admin.html")
-    else:
-        busToAdd = request.form
-        print(busToAdd)
+    buses = db.execute("SELECT * FROM bus")
+    total = len(buses)
+    active = db.execute("SELECT COUNT(id) FROM bus WHERE status IS 1")[0]['COUNT(id)']
+    inactive = total - active
+    return render_template("admin.html", buses=buses, active=active, inactive=inactive, total=total)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -102,13 +102,28 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/update_count", methods=["POST"])
-def update_count():
-    request.form.get()
+@app.route("/tracker_update", methods=["POST"])
+def tracker_update():   # handle location and counts here
     return
 
 @app.route("/register_bus", methods=["POST"])
 def register_bus():
+    bus_name = request.form.get('busname')
+    license = request.form.get('license')
+
+    if bus_name:
+        db.execute("INSERT INTO bus (name, license_plate) VALUES(?, ?)", bus_name, license)
+    else:
+        db.execute("INSERT INTO bus (license_plate) VALUES(?)", license)
+
+    return redirect("/admin")
+
+@app.route("/update_status", methods=["POST"])
+def update_status():
+    return
+
+@app.route("/remove", methods=["POST"])
+def remove_bus():
     return
 
 app.run()

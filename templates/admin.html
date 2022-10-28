@@ -2,5 +2,61 @@
 {% block title %} | Admin{% endblock %}
 
 {% block main %}
-    <h2>Add bus</h2>
+<div class="container section">
+    <h1 class="page-heading">Register a new bus</h1>
+    <form class="auth-form" action="/register_bus" method="post">
+        <div class="form-inp">
+            <input autocomplete="off" autofocus class="form-control" id="busname" name="busname" placeholder="Bus name"
+                type="text">
+        </div>
+        <div class="form-inp">
+            <input autocomplete="off" autofocus class="form-control" id="license" name="license"
+                placeholder="License Plate" type="text" required>
+        </div>
+        <button class="btn form-submit" type="submit">Register bus</button>
+    </form>
+</div>
+
+<div class="container section">
+    <h1 class="page-heading">Manage buses</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="text-start">ID</th>
+                <th class="text-start">Name</th>
+                <th class="text-end">License plate</th>
+                <th class="text-end">Location</th>
+                <th class="text-end">GPS Coordinates</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in buses %}
+            <tr>
+                <td class="text-start">{{ row.id }}</td>
+                <td class="text-start">{{ row.name }}</td>
+                <td class="text-end">{{ row.license_plate }}</td>
+                <td class="text-end">{{ row.in_campus_location }}</td>
+                <td class="text-end">{{ row.long }},{{ row.lat }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="4">Active</td>
+                <td class="border-0 text-end">{{ active }}</td>
+            </tr>
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="4">Inactive</td>
+                <td class="border-0 w-bold text-end">{{ inactive }}</td>
+            </tr>
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="4">Total</td>
+                <td class="border-0 w-bold text-end">{{ total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
 {% endblock %}
