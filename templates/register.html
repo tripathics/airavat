@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %} | Register {% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 class="page-heading">Admin Register</h1>
+<form class="auth-form" action="/register" method="post">
+    <div class="form-inp">
+        <input class="form-control mx-auto w-auto" autocomplete="off" name="username" type="text"
+            placeholder="Username">
+    </div>
+    <div class="form-inp">
+        <input class="form-control mx-auto w-auto" name="password" type="password" placeholder="Password">
+    </div>
+    <div class="form-inp">
+        <input class="form-control mx-auto w-auto" name="confirmation" type="password" placeholder="Confirm Password">
+    </div>
+    <button class="btn form-submit" type="submit">Register</button>
+</form>
+</div>
+{% endblock %}

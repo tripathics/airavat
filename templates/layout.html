@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="static/style.css">
+  <title>
+    Airavat{% block title %}{% endblock %}
+  </title>
+</head>
+
+<body>
+  <nav class="main-nav">
+    <div class="main-nav-wrapper container">
+      <div class="airavat-logo">
+        <a class="nav-item" href="/">
+          <span>A</span>
+          <span>I</span>
+          <span>R</span>
+          <span>A</span>
+          <span>V</span>
+          <span>A</span>
+          <span>T</span>
+        </a>
+      </div>
+
+      {% if session["user_id"] %}
+      <ul class="nav-lis">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="nav-lis">
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Admin login</a>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="main-main">
+    {% if get_flashed_messages() %}
+    <header class="container">
+      <div class="alert" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+      </div>
+    </header>
+    {% endif %}
+    {% block main %}{% endblock %}
+  </main>
+
+  <footer class="main-footer">
+    <div class="main-footer-wrapper container">
+      <div class="left">
+        <div class="airavat-logo">
+          <span>A</span>
+          <span>I</span>
+          <span>R</span>
+          <span>A</span>
+          <span>V</span>
+          <span>A</span>
+          <span>T</span>
+        </div>
+        <p>
+          National Institute of Technology,<br>
+          Arunachal Pradesh
+        </p>
+      </div>
+      <div class="right">
+        <p><strong>Transport Cell, NITAP</strong></p>
+        <p><a href="tel:+913782232589">03782232589</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

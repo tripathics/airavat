@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %} | Admin Login{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 class="page-heading">Admin Login</h1>
+    <form class="auth-form" action="/login" method="post">
+        <div class="form-inp">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username"
+                placeholder="Username" type="text" required>
+        </div>
+        <div class="form-inp">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password"
+                type="password" required>
+        </div>
+        <button class="btn form-submit" type="submit">Log In</button>
+    </form>
+</div>
+{% endblock %}
