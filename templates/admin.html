@@ -44,7 +44,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>ID</th>
+                <th></th>
                 <th>Name</th>
                 <th>License plate</th>
                 <th>GPS Coordinates</th>
@@ -55,7 +55,13 @@
         <tbody>
             {% for row in buses %}
             <tr>
-                <td>{{ row.id }}</td>
+                <td class="status">
+                    {% if row.status == 1 %}
+                    <div title="Status active" aria-label="Status active" class="bus-status-icon active"></div>
+                    {% else %}
+                    <div title="Status inactive" aria-label="Status inactive" class="bus-status-icon inactive"></div>
+                    {% endif %}
+                </td>
                 <td>{{ row.name }}</td>
                 <td>{{ row.license_plate }}</td>
                 <td>{{ row.long }},{{ row.lat }}</td>

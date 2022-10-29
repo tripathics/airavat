@@ -9,5 +9,66 @@
     </div>
 </header>
 {% endif %}
-<h3>Hello, world</h3>
+
+<div class="container">
+    <h1 class="page-heading">
+        Buses in Campus
+    </h1>
+
+    <div class="update-time">
+        Last update: <time id="timestamp">{{ timestamp }}</time>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Buses available</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hostel</td>
+                <td id="hostelCt">{{ hostel_count }}</td>
+            </tr>
+            <tr>
+                <td>Academic Block</td>
+                <td id="acadCt">{{ acad_count }}</td>
+            </tr>
+            <tr>
+                <td>Library</td>
+                <td id="libCt">{{ lib_count }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function fetchUpdates() {
+        const response = await fetch('/fetch_updates', {
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        return response.json();
+    }
+
+    fetchUpdates()
+    setInterval(() => {
+        fetchUpdates().then(res => {
+            let counts = res.counts
+            let timestamp = res.timestamp
+            console.log(res.counts, timestamp)
+
+            document.getElementById('libCt').innerText =  counts.lib;
+            document.getElementById('acadCt').innerText =  counts.acad;
+            document.getElementById('hostelCt').innerText =  counts.hostel;
+            document.getElementById('timestamp').innerText =  timestamp;
+        })
+    }, 5000);
+
+</script>
+
 {% endblock %}

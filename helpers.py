@@ -1,6 +1,8 @@
 from flask import redirect, render_template, request, session
 from functools import wraps
 
+LOCATIONS = ['Hostel', 'Academic Block', 'Library']
+
 def login_required(f):
     """
     Decorate routes to require login.

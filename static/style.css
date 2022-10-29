@@ -30,7 +30,7 @@ body {
     padding: 0 0 3.2rem;
 } 
 .main-main > .container:first-child {
-    margin-top: 3.2rem;
+    padding-top: 3.2rem;
 }
 
 .page-heading {
@@ -46,6 +46,7 @@ body {
     position: relative;
     padding: 0.75rem 1.25rem;
     margin-bottom: 1rem;
+    margin-top: 0.5rem;
     border: 1px solid transparent;
     border-radius: 0.25rem;
     color: #004085;
@@ -153,6 +154,8 @@ button.delete:focus {
     box-shadow: 0 -2px 8px rgb(0 0 0 / 32%);
     position: sticky;
     top: 0;
+    z-index: 10;
+    background-color: white;
 }
 
 .main-nav-wrapper {
@@ -188,6 +191,7 @@ button.delete:focus {
     background-color: #323232;
     position: sticky;
     top: var(--nav-height);
+    z-index: 8;
 }
 .admin-nav-wrapper {
     height: 100%;
@@ -221,6 +225,7 @@ button.delete:focus {
     background-color: #404040;
     box-shadow: 0 0 8px -3px black;
     color: #fefefe;
+    font-weight: 600;
 }
 .tab-view {
     display: none;
@@ -229,7 +234,20 @@ button.delete:focus {
     display: block;
 }
 
-/* admin table */
+/* admin */
+.bus-status-icon {
+    height: 0.6rem;
+    width: 0.6rem;
+    border-radius: 100%;
+}
+.bus-status-icon.active {
+    background-color: rgb(81, 182, 129);
+}
+.bus-status-icon.inactive {
+    background-color: rgb(244, 201, 80);
+}
+
+/* table */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -271,6 +289,15 @@ button.delete:focus {
     margin: auto;
     align-items: center;
     justify-content: space-between;
+}
+
+.update-time {
+    margin: 2rem 0 1.6rem;
+    text-align: end;
+    font-size: 0.8rem;
+}
+.update-time > time {
+    font-weight: 600;
 }
 
 /* footer */

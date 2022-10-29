@@ -1,6 +1,7 @@
-from flask import Flask, flash, redirect, render_template, request, session
+from datetime import datetime
+from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
-from helpers import login_required, apology
+from helpers import login_required, apology, LOCATIONS
 from cs50 import SQL
 
 app = Flask(__name__)
@@ -15,7 +16,28 @@ Session(app)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    hostel_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Hostel'")[0]['COUNT(name)']
+    acad_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Academic Block'")[0]['COUNT(name)']
+    lib_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Library'")[0]['COUNT(name)']
+    update_time = datetime.now().replace(microsecond=0)
+    return render_template("index.html", lib_count=lib_count, acad_count=acad_count, hostel_count=hostel_count, timestamp=update_time)
+
+@app.route("/fetch_updates")
+def fetch_updates():
+    hostel_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Hostel'")[0]['COUNT(name)']
+    acad_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Academic Block'")[0]['COUNT(name)']
+    lib_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Library'")[0]['COUNT(name)']
+    update_time = datetime.now().replace(microsecond=0)
+
+    update = {
+        'counts': {
+            'hostel': hostel_count,
+            'acad': acad_count,
+            'lib': lib_count
+        },
+        'timestamp': update_time
+    }
+    return jsonify(update)
 
 @app.route("/admin")
 @login_required
@@ -25,7 +47,6 @@ def admin():
     active = db.execute("SELECT COUNT(id) FROM bus WHERE status IS 1")[0]['COUNT(id)']
     inactive = total - active
     return render_template("admin.html", buses=buses, active=active, inactive=inactive, total=total)
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -130,7 +151,6 @@ def update_bus():
         new_status = 1 if request.form.get('status') == 'active' else 0  
         new_name = request.form.get('busname')
         new_license = request.form.get('license')
-        print(new_status, new_name, new_license)
         db.execute("""UPDATE bus 
             SET name=?, status=?, license_plate=? 
             WHERE id IS ?""", 
@@ -148,4 +168,4 @@ def remove_bus():
     flash(f"Bus: '{name}', deleted", category="info")
     return redirect("/admin")
 
-app.run()
+app.run(host="0.0.0.0")
