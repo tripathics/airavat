@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}{% endblock %}
+
+{% block main %}
+
+<div class="container section tab-view active-view">
+    <h1 class="page-heading">Edit bus</h2>
+        <form class="bus-form" action="/update_bus" method="post">
+            <input name="id" type="hidden" value="{{ bus.id }}">
+            <div class="form-inp">
+                <input autocomplete="off" autofocus class="form-control" id="busname" name="busname"
+                    value="{{ bus.name }}" placeholder="Bus name" type="text">
+            </div>
+            <div class="form-inp">
+                <input autocomplete="off" autofocus class="form-control" id="license" name="license"
+                    value="{{ bus.license_plate }}" placeholder="License Plate" type="text" required>
+            </div>
+
+            <div class="form-inp radios">
+                <div class="label">Status: </div>
+                <div>
+                {% if bus.status == 0 %}
+                <input type="radio" id="statusActive" name="status" value="active">
+                <label for="active">Active</label><br>
+                <input type="radio" id="statusInactive" name="status" value="inactive" checked>
+                <label for="inactive">Inactive</label><br>
+                {% else %}
+                <input type="radio" id="statusActive" name="status" value="active" checked>
+                <label for="active">Active</label><br>
+                <input type="radio" id="statusInactive" name="status" value="inactive">
+                <label for="inactive">Inactive</label><br>
+                {% endif %}
+                </div>
+            </div>
+
+            <button class="btn form-submit" type="submit">Save changes</button>
+        </form>
+
+        <form class="bus-form" action="/remove" method="post">
+            <input name="id" type="hidden" value="{{ bus.id }}">
+            <button class="btn delete" type="submit">Delete bus</button>
+        </form>
+</div>
+{% endblock %}

@@ -118,12 +118,34 @@ def register_bus():
 
     return redirect("/admin")
 
-@app.route("/update_status", methods=["POST"])
-def update_status():
-    return
+@app.route("/update_bus", methods=["GET", "POST"])
+@login_required
+def update_bus():
+    if (request.method == "GET"):
+        id = request.args.get('id')
+        bus = db.execute("SELECT * FROM bus WHERE id IS ?", id)[0]
+        return render_template("editbus.html", bus=bus)
+    else:
+        id = request.form.get('id')
+        new_status = 1 if request.form.get('status') == 'active' else 0  
+        new_name = request.form.get('busname')
+        new_license = request.form.get('license')
+        print(new_status, new_name, new_license)
+        db.execute("""UPDATE bus 
+            SET name=?, status=?, license_plate=? 
+            WHERE id IS ?""", 
+            new_name, new_status, new_license, id
+        )
+
+        flash(f"Bus details updated", category="info")
+        return redirect("/admin")
 
 @app.route("/remove", methods=["POST"])
 def remove_bus():
-    return
+    id = request.form.get('id')
+    name = db.execute("SELECT name FROM bus WHERE id IS ?", id)[0]['name']
+    db.execute("DELETE FROM bus WHERE id IS ?", id)
+    flash(f"Bus: '{name}', deleted", category="info")
+    return redirect("/admin")
 
 app.run()

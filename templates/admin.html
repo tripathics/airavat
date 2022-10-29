@@ -2,7 +2,28 @@
 {% block title %} | Admin{% endblock %}
 
 {% block main %}
-<div class="container section">
+<nav class="admin-nav">
+    <div class="admin-nav-wrapper container">
+        <ul class="tab-btns">
+            <li class="tab">
+                <button onclick="switchTab('register')" class="tab-btn active">Register</button>
+            </li>
+            <li class="tab">
+                <button onclick="switchTab('manage')" class="tab-btn">Manage</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+{% if get_flashed_messages() %}
+<header class="container">
+  <div class="alert" role="alert">
+    {{ get_flashed_messages() | join(" ") }}
+  </div>
+</header>
+{% endif %}
+
+<div class="container section tab-view active-view">
     <h1 class="page-heading">Register a new bus</h1>
     <form class="auth-form" action="/register_bus" method="post">
         <div class="form-inp">
@@ -17,46 +38,70 @@
     </form>
 </div>
 
-<div class="container section">
+<div class="container section tab-view">
     <h1 class="page-heading">Manage buses</h1>
 
     <table class="table table-hover">
         <thead>
             <tr>
-                <th class="text-start">ID</th>
-                <th class="text-start">Name</th>
-                <th class="text-end">License plate</th>
-                <th class="text-end">Location</th>
-                <th class="text-end">GPS Coordinates</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>License plate</th>
+                <th>GPS Coordinates</th>
+                <th>Location</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {% for row in buses %}
             <tr>
-                <td class="text-start">{{ row.id }}</td>
-                <td class="text-start">{{ row.name }}</td>
-                <td class="text-end">{{ row.license_plate }}</td>
-                <td class="text-end">{{ row.in_campus_location }}</td>
-                <td class="text-end">{{ row.long }},{{ row.lat }}</td>
+                <td>{{ row.id }}</td>
+                <td>{{ row.name }}</td>
+                <td>{{ row.license_plate }}</td>
+                <td>{{ row.long }},{{ row.lat }}</td>
+                <td>{{ row.in_campus_location }}</td>
+                <td>
+                    <a href="/update_bus?id={{ row.id }}">
+                        Edit
+                    </a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
-                <td class="border-0 fw-bold text-end" colspan="4">Active</td>
-                <td class="border-0 text-end">{{ active }}</td>
+                <td colspan="5">Active</td>
+                <td>{{ active }}</td>
             </tr>
             <tr>
-                <td class="border-0 fw-bold text-end" colspan="4">Inactive</td>
-                <td class="border-0 w-bold text-end">{{ inactive }}</td>
+                <td colspan="5">Inactive</td>
+                <td>{{ inactive }}</td>
             </tr>
             <tr>
-                <td class="border-0 fw-bold text-end" colspan="4">Total</td>
-                <td class="border-0 w-bold text-end">{{ total }}</td>
+                <td colspan="5">Total</td>
+                <td>{{ total }}</td>
             </tr>
         </tfoot>
     </table>
 </div>
+
+<script>
+    function switchTab(tab) {
+        const tabBtns = document.getElementsByClassName('tab-btn')
+        const views = document.getElementsByClassName('tab-view')
+        if (tab == 'register') {
+            tabBtns[0].classList.add('active')
+            tabBtns[1].classList.remove('active')
+            views[0].classList.add('active-view')
+            views[1].classList.remove('active-view')
+        } else {
+            tabBtns[0].classList.remove('active')
+            tabBtns[1].classList.add('active')
+            views[0].classList.remove('active-view')
+            views[1].classList.add('active-view')
+        }
+    }
+</script>
 
 
 {% endblock %}

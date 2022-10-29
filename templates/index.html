@@ -2,5 +2,12 @@
 {% block title %}{% endblock %}
 
 {% block main %}
-    <h3>Hello, world</h3>
+{% if get_flashed_messages() %}
+<header class="container">
+    <div class="alert" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
+</header>
+{% endif %}
+<h3>Hello, world</h3>
 {% endblock %}
