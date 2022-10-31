@@ -3,6 +3,7 @@ from flask import Flask, flash, jsonify, redirect, render_template, request, ses
 from flask_session import Session
 from helpers import login_required, apology, LOCATIONS
 from cs50 import SQL
+from os import environ
 
 app = Flask(__name__)
 db = SQL("sqlite:///airavat.db")
@@ -13,6 +14,13 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+# make sture api key is set
+if not environ.get("API_KEY"):
+    raise RuntimeError("API_KEY not set")
+
+# no. of places in campus
+N_PLACES = len(LOCATIONS)
 
 @app.route("/")
 def index():
@@ -123,9 +131,23 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/tracker_update", methods=["POST"])
+@app.route("/tracker_update", methods=["GET"])
 def tracker_update():   # handle location and counts here
-    return
+    API_KEY = environ.get("API_KEY")
+    api_key_recd = request.args.get('api_key')
+    if (api_key_recd != API_KEY):
+        return "Unauthorized"
+    
+    l_id = int(request.args.get('location'))
+    if not l_id in range(0, N_PLACES):
+        return "failure"
+
+    id = request.args.get('id')
+    location = LOCATIONS[l_id]
+    db.execute("UPDATE bus SET in_campus_location=? WHERE id IS ?", location, id)
+    
+
+    return "success"
 
 @app.route("/register_bus", methods=["POST"])
 def register_bus():
@@ -161,6 +183,7 @@ def update_bus():
         return redirect("/admin")
 
 @app.route("/remove", methods=["POST"])
+@login_required
 def remove_bus():
     id = request.form.get('id')
     name = db.execute("SELECT name FROM bus WHERE id IS ?", id)[0]['name']
