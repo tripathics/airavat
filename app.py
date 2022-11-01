@@ -13,6 +13,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_COOKIE_NAME"] = "session"
 Session(app)
 
 # make sture api key is set
@@ -131,6 +132,25 @@ def register():
     else:
         return render_template("register.html")
 
+@app.route("/location_update", methods=["GET"])
+def location_update():
+    API_KEY = environ.get("API_KEY")
+    api_key_recd = request.args.get('api_key')
+    if (api_key_recd != API_KEY):
+        return "Unauthorized"
+    
+    long = request.args.get('long')
+    lat = request.args.get('lat')
+    id = request.args.get('id')
+
+    db.execute("UPDATE bus SET long=?, lat=? WHERE id IS ?", long, lat, id)
+    
+    return "success"
+
+@app.route("/send_location", methods=["GET"])
+def send_location():
+    return render_template("push_location.html")
+
 @app.route("/tracker_update", methods=["GET"])
 def tracker_update():   # handle location and counts here
     API_KEY = environ.get("API_KEY")
@@ -146,7 +166,6 @@ def tracker_update():   # handle location and counts here
     location = LOCATIONS[l_id]
     db.execute("UPDATE bus SET in_campus_location=? WHERE id IS ?", location, id)
     
-
     return "success"
 
 @app.route("/register_bus", methods=["POST"])

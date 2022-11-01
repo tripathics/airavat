@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>geolocation</title>
+</head>
+
+<body>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d28428.155860088806!2d93.4248109!3d27.0453459!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1662049742959!5m2!1sen!2sin"
+    width="600" height="450" style="border:0; margin:auto; display: block;" allowfullscreen="" loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <button id="click">Get Current Location</button>
+  <div id="errors"></div>
+  <p id="loc"></p>
+  <p id="giveLink"></p>
+
+</body>
+
+<script type="module">
+  const API_KEY = 'qazsevaqpoi123,azxcv42afpiweqf~faefalkj123';
+  const ID = 1;
+  const URL = 'http://192.168.1.43:5000'
+
+  async function InsertData(long, lat) {
+    const response = await fetch('/location_update?' + new URLSearchParams({
+      api_key: API_KEY,
+      id: ID,
+      long: long,
+      lat: lat
+    }))
+    return response;
+  }
+
+  let loc = document.getElementById("loc");
+  async function showPosition(position) {
+    loc.innerHTML = "Latitude: " + position.coords.latitude +
+      "<br>Longitude: " + position.coords.longitude;
+
+    var lat = position.coords.latitude;
+    var long = position.coords.longitude;
+    let url = `http://www.google.com/maps/place/${long},${lat}`
+    document.getElementById('giveLink').innerHTML = `
+    <a href="${url}">${url}</a>
+    `;
+    InsertData(long, lat);
+  }
+
+  async function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      loc.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+
+  const x = document.getElementById("errors")
+  async function showError(error) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        x.innerHTML = "User denied the request for Geolocation."
+        break;
+      case error.POSITION_UNAVAILABLE:
+        x.innerHTML = "Location information is unavailable."
+        break;
+      case error.TIMEOUT:
+        x.innerHTML = "The request to get user location timed out."
+        break;
+      case error.UNKNOWN_ERROR:
+        x.innerHTML = "An unknown error occurred."
+        break;
+    }
+  }
+
+  setInterval(() => {
+    getLocation();
+  }, 5000);
+</script>
+
+</html>
