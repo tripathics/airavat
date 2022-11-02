@@ -9,21 +9,46 @@
 </head>
 
 <body>
+  <select id="busId" type="number" name="bus_id">
+    <option value="0">Select bus ID</option>
+    {% for id_obj in bus_ids %}
+    <option value="{{ id_obj.id }}">{{ id_obj.id }}</option>
+    {% endfor %}   
+  </select>
+  <button id="submit" type="button">
+    Initiate location update
+  </button>
+
+  <p>
+    <a target="_blank" href="chrome://flags/#unsafely-treat-insecure-origin-as-secure">
+      Fix chrome permissions
+    </a>
+    Copy the url of this page and add it to the text box by visiting the above link
+  </p>
   <iframe
     src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d28428.155860088806!2d93.4248109!3d27.0453459!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1662049742959!5m2!1sen!2sin"
     width="600" height="450" style="border:0; margin:auto; display: block;" allowfullscreen="" loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"></iframe>
-  <button id="click">Get Current Location</button>
   <div id="errors"></div>
   <p id="loc"></p>
   <p id="giveLink"></p>
-
 </body>
 
 <script type="module">
   const API_KEY = 'qazsevaqpoi123,azxcv42afpiweqf~faefalkj123';
-  const ID = 1;
+  let ID = 0;
   const URL = 'http://192.168.1.43:5000'
+
+  document.getElementById("submit").addEventListener("click", initiateLocationTransmit)
+
+  function initiateLocationTransmit() {
+    let idSelect = document.getElementById("busId");
+    ID = idSelect.value;
+    setInterval(() => {
+      console.log(new Date().toLocaleTimeString('en-IN'))
+      getLocation();
+    }, 5000);
+  }
 
   async function InsertData(long, lat) {
     const response = await fetch('/location_update?' + new URLSearchParams({
@@ -74,10 +99,6 @@
         break;
     }
   }
-
-  setInterval(() => {
-    getLocation();
-  }, 5000);
 </script>
 
 </html>

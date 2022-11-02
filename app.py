@@ -149,7 +149,8 @@ def location_update():
 
 @app.route("/send_location", methods=["GET"])
 def send_location():
-    return render_template("push_location.html")
+    bus_ids = db.execute("SELECT id FROM bus WHERE status IS 1")
+    return render_template("push_location.html", bus_ids=bus_ids)
 
 @app.route("/tracker_update", methods=["GET"])
 def tracker_update():   # handle location and counts here
