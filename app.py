@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
-from flask_session import Session
+# from flask_session import Session
 from helpers import login_required, apology, LOCATIONS
 from cs50 import SQL
 from os import environ
@@ -8,13 +8,12 @@ from os import environ
 app = Flask(__name__)
 db = SQL("sqlite:///airavat.db")
 
-app.config['DEBUG'] = True
-app.config['TEMPLATES_AUTO_RELOAD'] = True
-
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_COOKIE_NAME"] = "session"
-Session(app)
+
+app.secret_key = 'super secret key'
+# Session(app)
 
 # make sture api key is set
 if not environ.get("API_KEY"):
@@ -22,6 +21,16 @@ if not environ.get("API_KEY"):
 
 # no. of places in campus
 N_PLACES = len(LOCATIONS)
+
+# ensure responses aren't cached
+@app.after_request
+def after_request(response):
+    """Ensure responses aren't cached"""
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
+
 
 @app.route("/")
 def index():
@@ -45,6 +54,7 @@ def fetch_updates():
     hostel_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Hostel'")[0]['COUNT(name)']
     acad_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Academic Block'")[0]['COUNT(name)']
     lib_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Library'")[0]['COUNT(name)']
+    coords = db.execute("SELECT id, name, license_plate, lat, lng FROM bus WHERE status IS 1")
     update_time = datetime.now().replace(microsecond=0)
 
     update = {
@@ -53,6 +63,7 @@ def fetch_updates():
             'acad': acad_count,
             'lib': lib_count
         },
+        'coords': coords,
         'timestamp': update_time
     }
     return jsonify(update)

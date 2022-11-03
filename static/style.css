@@ -6,7 +6,7 @@
 
 :root {
     --nav-height: 4rem;
-    --ftr-height: 8rem;
+    --ftr-height: 9.26rem;
 }
 
 .container {
@@ -95,6 +95,13 @@ body {
     appearance: none;
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 }
 
 .btn {
@@ -187,12 +194,31 @@ button.delete:focus {
 .nav-item {
     margin-left: 1rem;
     color: #222222;
+    border: 2px solid transparent;
+    border-radius: 4rem;
+    font-size: .9rem;
+    font-weight: 400;
+    height: 1.8rem;
+    letter-spacing: .01rem;
+    line-height: 1.1;
+    padding: 0.25rem 0.6rem;
+}
+.nav-item:hover {
+    border: 2px solid #fafafa;
+    transition: .5s ease;
+}
+.nav-item:hover .nav-link {
+    color: #fafafa;
 }
 
 .brand-logo {
     margin: 0;
     display: block;
     height: fit-content;
+    border: none;
+}
+.brand-logo:hover {
+    border: none;
 }
 
 .brand-logo>svg {
@@ -201,17 +227,53 @@ button.delete:focus {
 }
 
 .nav-link {
-    text-decoration: none;
     color: #dedede;
-}
-
-.nav-link:hover {
-    text-decoration: underline;
-    color: #fafafa;
+    text-decoration: none;
 }
 
 /* index */
+.location-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+@media screen and (max-width: 720px) {
+    .location-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 550px) {
+    .location-cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
 
+.location-cards .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.2rem;
+    min-height: 220px;
+    background-color: skyblue;
+    border-radius: 0.5rem;
+    color: white;
+}
+
+.location-cards .card:nth-child(1) {
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), 
+    url('./media/hostel.jpg');
+    background-size: cover;
+}
+.location-cards .card:nth-child(2) {
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), 
+    url('./media/academic_block.jpeg');
+    background-size: cover;
+}
+.location-cards .card:nth-child(3) {
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), 
+    url('./media/library_photo.jpeg');
+    background-size: cover;
+}
 
 /* admin nav */
 .admin-nav {
@@ -370,9 +432,28 @@ button.delete:focus {
 
 .main-footer-wrapper {
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
+}
+
+.main-footer .ftr-ln a {
+    color: #eee;
+    text-decoration: none;
+}
+.main-footer .ftr-ln a:hover {
+    text-decoration: underline;
+}
+
+.ftr-ln {
+    margin-top: 0.15rem;
+}
+.main-footer .copyright {
+    padding: 0.8rem 0;
+}
+.main-footer .copyright p {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #eaeaea;
 }
 
 /* map */
