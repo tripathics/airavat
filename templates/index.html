@@ -14,6 +14,7 @@
     <h1 class="page-heading">
         Buses in Campus
     </h1>
+    <p>See how many buses are at each bus stop within the campus. In NIT Arunachal Pradesh, bus stops are at three locations- Hostels, Academic block and Library.</p>
 
     <div class="update-time">
         Last update: <time id="timestamp">{{ timestamp }}</time>
@@ -47,10 +48,11 @@
     </div> -->
 </div>
 
-<div class="container">
+<div class="container section">
     <h1 class="page-heading">
         Buses on map
     </h1>
+    <p>See all the university buses' locations on the map at a Glance! The map updates in real time so you get the live location of each bus at one place.</p>
 
     <div id="map" class="bus-map">
         Please wait...
@@ -109,14 +111,14 @@
 
         fetchUpdates().then(res => {
             coords = res.coords
-            coords.forEach((pin, i) => {
+            coords.forEach(pin => {
                 console.log(pin)
 
                 var location = new Microsoft.Maps.Location(pin.lat, pin.lng)
                 var pin = new Microsoft.Maps.Pushpin(location, {
                     title: `${pin.name}`,
                     subTitle: `${pin.license_plate}`,
-                    text: `${i + 1}`,
+                    text: `${pin.id}`,
                     color: 'green'
                 });
                 map.entities.push(pin);

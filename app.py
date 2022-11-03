@@ -169,7 +169,7 @@ def location_update():
     
     return "success"
 
-@app.route("/send_location", methods=["GET"])
+@app.route("/sl", methods=["GET"])
 def send_location():
     bus_ids = db.execute("SELECT id FROM bus WHERE status IS 1")
     return render_template("push_location.html", bus_ids=bus_ids)
