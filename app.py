@@ -31,6 +31,15 @@ def index():
     update_time = datetime.now().replace(microsecond=0)
     return render_template("index.html", lib_count=lib_count, acad_count=acad_count, hostel_count=hostel_count, timestamp=update_time)
 
+@app.route("/outside_campus")
+def outside_campus():
+    return render_template("outside_campus.html")
+
+@app.route("/get_coords")
+def get_coords():
+    coords = db.execute("SELECT name, license_plate, lat, lng FROM bus WHERE status IS 1")
+    return jsonify(coords)
+
 @app.route("/fetch_updates")
 def fetch_updates():
     hostel_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Hostel'")[0]['COUNT(name)']
@@ -48,6 +57,7 @@ def fetch_updates():
     }
     return jsonify(update)
 
+# user
 @app.route("/admin")
 @login_required
 def admin():
@@ -66,27 +76,27 @@ def login():
 
     if (request.method == "GET"):
         return render_template("login.html")
-    else:
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            return apology("must provide username", 403)
+    
+    # Ensure username was submitted
+    if not request.form.get("username"):
+        return apology("must provide username", 403)
 
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            return apology("must provide password", 403)
+    # Ensure password was submitted
+    elif not request.form.get("password"):
+        return apology("must provide password", 403)
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+    # Query database for username
+    rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not (rows[0]["password"] == request.form.get("password")):
-            return apology("invalid username and/or password", 403)
+    # Ensure username exists and password is correct
+    if len(rows) != 1 or not (rows[0]["password"] == request.form.get("password")):
+        return apology("invalid username and/or password", 403)
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+    # Remember which user has logged in
+    session["user_id"] = rows[0]["id"]
 
-        # Redirect user to home page
-        return redirect("/admin")
+    # Redirect user to home page
+    return redirect("/admin")
 
 @app.route("/logout")
 def logout():
@@ -132,6 +142,7 @@ def register():
     else:
         return render_template("register.html")
 
+# tracker
 @app.route("/location_update", methods=["GET"])
 def location_update():
     API_KEY = environ.get("API_KEY")
@@ -139,11 +150,11 @@ def location_update():
     if (api_key_recd != API_KEY):
         return "Unauthorized"
     
-    long = request.args.get('long')
+    lng = request.args.get('lng')
     lat = request.args.get('lat')
     id = request.args.get('id')
 
-    db.execute("UPDATE bus SET long=?, lat=? WHERE id IS ?", long, lat, id)
+    db.execute("UPDATE bus SET lng=?, lat=? WHERE id IS ?", lng, lat, id)
     
     return "success"
 
@@ -169,7 +180,9 @@ def tracker_update():   # handle location and counts here
     
     return "success"
 
+# admin
 @app.route("/register_bus", methods=["POST"])
+@login_required
 def register_bus():
     bus_name = request.form.get('busname')
     license = request.form.get('license')

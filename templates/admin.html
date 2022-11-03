@@ -17,9 +17,9 @@
 
 {% if get_flashed_messages() %}
 <header class="container">
-  <div class="alert" role="alert">
-    {{ get_flashed_messages() | join(" ") }}
-  </div>
+    <div class="alert" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
 </header>
 {% endif %}
 
@@ -41,54 +41,56 @@
 <div class="container section tab-view">
     <h1 class="page-heading">Manage buses</h1>
 
-    <table class="table table-hover">
-        <thead>
+    <div class="scroll-table-wrapper">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>License plate</th>
+                    <th>GPS Coordinates</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in buses %}
+                <tr>
+                    <td class="status">
+                        {% if row.status == 1 %}
+                        <div title="Status active" aria-label="Status active" class="bus-status-icon active"></div>
+                        {% else %}
+                        <div title="Status inactive" aria-label="Status inactive" class="bus-status-icon inactive">
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.license_plate }}</td>
+                    <td>{{ row.lng }},{{ row.lat }}</td>
+                    <td>{{ row.in_campus_location }}</td>
+                    <td>
+                        <a href="/update_bus?id={{ row.id }}">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bus-summary">
+        <table class="">
             <tr>
-                <th></th>
-                <th>Name</th>
-                <th>License plate</th>
-                <th>GPS Coordinates</th>
-                <th>Location</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in buses %}
-            <tr>
-                <td class="status">
-                    {% if row.status == 1 %}
-                    <div title="Status active" aria-label="Status active" class="bus-status-icon active"></div>
-                    {% else %}
-                    <div title="Status inactive" aria-label="Status inactive" class="bus-status-icon inactive"></div>
-                    {% endif %}
-                </td>
-                <td>{{ row.name }}</td>
-                <td>{{ row.license_plate }}</td>
-                <td>{{ row.long }},{{ row.lat }}</td>
-                <td>{{ row.in_campus_location }}</td>
-                <td>
-                    <a href="/update_bus?id={{ row.id }}">
-                        Edit
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5">Active</td>
+                <th>Active buses</td>
                 <td>{{ active }}</td>
             </tr>
             <tr>
-                <td colspan="5">Inactive</td>
+                <th>Inactive buses</td>
                 <td>{{ inactive }}</td>
             </tr>
-            <tr>
-                <td colspan="5">Total</td>
-                <td>{{ total }}</td>
-            </tr>
-        </tfoot>
-    </table>
+        </table>
+    </div>
 </div>
 
 <script>

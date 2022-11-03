@@ -25,7 +25,8 @@
     </a>
     Copy the url of this page and add it to the text box by visiting the above link
   </p>
-  <iframe
+  <!-- src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d28428.155860088806!2d93.4248109!3d27.0453459!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1662049742959!5m2!1sen!2sin" -->
+  <iframe id="map"
     src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d28428.155860088806!2d93.4248109!3d27.0453459!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1662049742959!5m2!1sen!2sin"
     width="600" height="450" style="border:0; margin:auto; display: block;" allowfullscreen="" loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -50,28 +51,30 @@
     }, 5000);
   }
 
-  async function InsertData(long, lat) {
+  async function InsertData(lng, lat) {
     const response = await fetch('/location_update?' + new URLSearchParams({
       api_key: API_KEY,
       id: ID,
-      long: long,
+      lng: lng,
       lat: lat
     }))
     return response;
   }
 
   let loc = document.getElementById("loc");
+  let mapEl = document.getElementById("map");
   async function showPosition(position) {
     loc.innerHTML = "Latitude: " + position.coords.latitude +
       "<br>Longitude: " + position.coords.longitude;
 
     var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    let url = `http://www.google.com/maps/place/${long},${lat}`
+    var lng = position.coords.longitude;
+    let url = `http://www.google.com/maps/place/${lat},${lng}`
+    mapEl.setAttribute("src", url)
     document.getElementById('giveLink').innerHTML = `
     <a href="${url}">${url}</a>
     `;
-    InsertData(long, lat);
+    InsertData(lng, lat);
   }
 
   async function getLocation() {

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}{% endblock %}
+
+{% block main %}
+
+<div class="container">
+  <h1>Buses on map</h1>
+  <div id="map" class="bus-map">
+    Please wait...
+  </div>
+</div>
+
+<!-- Reference to the Bing Maps SDK -->
+<script type='text/javascript'>
+  async function fetchCoords() {
+    const response = await fetch('/get_coords', {
+      method: 'GET',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    return response.json();
+  }
+
+  function GetMap() {
+    var map = new Microsoft.Maps.Map('#map', {
+      credentials: 'AsMbs64J91tX8_k7WZfcLoAi5yMYGksCQ_iVoRp6qg205sV8DWA4pfkm4_BZ6nxf',
+      center: new Microsoft.Maps.Location(27.0845657, 93.59637)
+    });
+
+    var center = map.getCenter();
+
+    fetchCoords().then(pins => {
+      for (let i = 0, n_pins = pins.length; i < n_pins; i++) {
+        console.log(pins[i]);
+        var location = new Microsoft.Maps.Location(pins[i].lat, pins[i].lng)
+        var pin = new Microsoft.Maps.Pushpin(location, {
+          title: `${pins[i].name}`,
+          subTitle: `${pins[i].license_plate}`,
+          text: `${i+1}`
+        });
+        map.entities.push(pin);
+      }
+    })
+  }
+</script>
+<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+
+{% endblock %}

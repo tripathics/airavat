@@ -19,34 +19,28 @@
         Last update: <time id="timestamp">{{ timestamp }}</time>
     </div>
 
-    <div class="location-cards">
-        <div class="card">
-            <h2>Hostel</h2>
-            <div>
-                <p id="hostelCt">{{ hostel_count }} buses</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Academic Block</h2>
-            <div>
-                <p id="acadCt">{{ acad_count }} buses</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Library</h2>
-            <div>
-                <p id="libCt">{{ lib_count }} buses</p>
-            </div>
-        </div>
-
-        
-    </div>
-
-    <div>
-        <a href="/outside_campus">Click to view buses outside campus</a>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Buses available</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hostel</td>
+                <td id="hostelCt">{{ hostel_count }}</td>
+            </tr>
+            <tr>
+                <td>Academic Block</td>
+                <td id="acadCt">{{ acad_count }}</td>
+            </tr>
+            <tr>
+                <td>Library</td>
+                <td id="libCt">{{ lib_count }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <script>

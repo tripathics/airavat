@@ -28,8 +28,9 @@ body {
 .main-main {
     min-height: calc(100vh - var(--nav-height) - var(--ftr-height));
     padding: 0 0 3.2rem;
-} 
-.main-main > .container:first-child {
+}
+
+.main-main>.container:first-child {
     padding-top: 3.2rem;
 }
 
@@ -37,6 +38,7 @@ body {
     text-align: center;
     margin: 0 0 2rem;
 }
+
 .sub-heading {
     margin: 0 0 1.6rem;
 }
@@ -64,6 +66,7 @@ body {
 .form-inp {
     margin-bottom: 1.5rem;
 }
+
 .form-inp.radios {
     display: flex;
     flex-direction: row;
@@ -71,7 +74,8 @@ body {
     min-width: 10.5rem;
     justify-content: space-between;
 }
-.radios > .label {
+
+.radios>.label {
     margin-right: 0.8rem;
 }
 
@@ -90,7 +94,7 @@ body {
     -moz-appearance: none;
     appearance: none;
     border-radius: 0.25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .btn {
@@ -111,7 +115,7 @@ body {
     margin-bottom: 1rem;
     font-size: 1rem;
     border-radius: 0.25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 button.delete {
@@ -119,11 +123,13 @@ button.delete {
     border-color: #d4576f;
     color: #fff;
 }
+
 button.delete:active {
     color: #fff;
     background-color: #bd4960;
     border-color: #bd4960;
 }
+
 button.delete:focus {
     color: #fff;
     background-color: #913749;
@@ -136,11 +142,13 @@ button.delete:focus {
     background-color: #0d6efd;
     border-color: #0d6efd;
 }
+
 .form-submit:active {
     color: #fff;
     background-color: #0a58ca;
     border-color: #0a53be;
 }
+
 .form-submit:focus {
     color: #fff;
     background-color: #0b5ed7;
@@ -154,8 +162,11 @@ button.delete:focus {
     box-shadow: 0 -2px 8px rgb(0 0 0 / 32%);
     position: sticky;
     top: 0;
-    z-index: 10;
-    background-color: white;
+    z-index: 10;    
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+    no-repeat url('./media/nav.png');
+    background-position: center center;
+    background-size: cover;
 }
 
 .main-nav-wrapper {
@@ -178,24 +189,43 @@ button.delete:focus {
     color: #222222;
 }
 
+.brand-logo {
+    margin: 0;
+    display: block;
+    height: fit-content;
+}
+
+.brand-logo>svg {
+    min-width: 125px;
+    height: 100%;
+}
+
 .nav-link {
     text-decoration: none;
+    color: #dedede;
 }
+
 .nav-link:hover {
     text-decoration: underline;
+    color: #fafafa;
 }
+
+/* index */
+
 
 /* admin nav */
 .admin-nav {
-    height: 3.6rem;
+    height: 2.2rem;
     background-color: #323232;
     position: sticky;
     top: var(--nav-height);
     z-index: 8;
 }
+
 .admin-nav-wrapper {
     height: 100%;
 }
+
 .tab-btns {
     list-style: none;
     padding: 0;
@@ -206,30 +236,36 @@ button.delete:focus {
     justify-content: center;
     overflow: hidden;
 }
+
 .tab {
     flex: 1 1 0;
     height: 100%;
 }
+
 .tab-btn {
     width: 100%;
     height: 100%;
     background-color: transparent;
     color: #ddd;
     border: none;
-    font-size: 1.125rem;
+    font-size: 0.95rem;
 }
+
 .tab-btn:hover {
     cursor: pointer;
 }
-.tab-btn.active {    
+
+.tab-btn.active {
     background-color: #404040;
     box-shadow: 0 0 8px -3px black;
     color: #fefefe;
     font-weight: 600;
 }
+
 .tab-view {
     display: none;
 }
+
 .tab-view.active-view {
     display: block;
 }
@@ -240,14 +276,20 @@ button.delete:focus {
     width: 0.6rem;
     border-radius: 100%;
 }
+
 .bus-status-icon.active {
     background-color: rgb(81, 182, 129);
 }
+
 .bus-status-icon.inactive {
     background-color: rgb(244, 201, 80);
 }
 
 /* table */
+.scroll-table-wrapper {
+    overflow-x: auto;
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -258,28 +300,46 @@ button.delete:focus {
     border-bottom: solid 2px #212529;
 }
 
-.table thead th, .table tbody tr {
+.table thead th,
+.table tbody tr {
     text-align: left;
 }
-.table thead th:last-child, .table tbody td:last-child {
+
+.table thead th:last-child,
+.table tbody td:last-child {
     text-align: end;
 }
-.table th, .table td {
+
+.table th,
+.table td {
     padding: 0.5rem;
 }
 
-.table tfoot > tr:first-child {
+.table tfoot>tr:first-child {
     border: none;
 }
-.table tfoot > tr:first-child {
+
+.table tfoot>tr:first-child {
     border-top: solid 2px #212529;
 }
-.table tfoot tr > td:first-child {
+
+.table tfoot tr>td:first-child {
     font-weight: 600;
     text-align: end;
 }
-.table tfoot tr > td:last-child {
+
+.table tfoot tr>td:last-child {
     text-align: end;
+}
+
+.bus-summary {
+    font-size: 1.125rem;
+    margin: 1rem 0;
+}
+.bus-summary table tr td, .bus-summary table tr th {
+    text-align: left;
+    padding: 0.25rem 0;
+    padding-right: 1.2rem;
 }
 
 /* admin edit bus */
@@ -296,13 +356,14 @@ button.delete:focus {
     text-align: end;
     font-size: 0.8rem;
 }
-.update-time > time {
+
+.update-time>time {
     font-weight: 600;
 }
 
 /* footer */
 .main-footer {
-    height: var(--ftr-height);
+    min-height: var(--ftr-height);
     background-color: #272727;
     color: #eee;
 }
@@ -312,4 +373,14 @@ button.delete:focus {
     padding-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
+}
+
+/* map */
+/* Set the size of the div element that contains the map */
+#map {
+    position: relative;
+    height: 450px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
 }

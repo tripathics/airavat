@@ -3,7 +3,7 @@ CREATE TABLE bus (
     name TEXT DEFAULT "Bus" NOT NULL,
     license_plate TEXT NOT NULL,
     status INTEGER DEFAULT 1 NOT NULL,
-    long REAL,
+    lng REAL,
     lat REAL,
     in_campus_location TEXT,
     PRIMARY KEY(id)   
