@@ -1,6 +1,5 @@
 from datetime import datetime
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
-# from flask_session import Session
 from helpers import login_required, apology, LOCATIONS
 from cs50 import SQL
 from os import environ
@@ -13,7 +12,6 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_COOKIE_NAME"] = "session"
 
 app.secret_key = 'super secret key'
-# Session(app)
 
 # make sture api key is set
 if not environ.get("API_KEY"):
@@ -39,15 +37,6 @@ def index():
     lib_count = db.execute("SELECT COUNT(name) FROM bus WHERE status=1 AND in_campus_location='Library'")[0]['COUNT(name)']
     update_time = datetime.now().replace(microsecond=0)
     return render_template("index.html", lib_count=lib_count, acad_count=acad_count, hostel_count=hostel_count, timestamp=update_time)
-
-@app.route("/outside_campus")
-def outside_campus():
-    return render_template("outside_campus.html")
-
-@app.route("/get_coords")
-def get_coords():
-    coords = db.execute("SELECT name, license_plate, lat, lng FROM bus WHERE status IS 1")
-    return jsonify(coords)
 
 @app.route("/fetch_updates")
 def fetch_updates():
