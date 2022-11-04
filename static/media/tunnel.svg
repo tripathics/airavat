@@ -1,0 +1,10 @@
+<svg width="73" height="69" viewBox="0 0 73 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="tunnel">
+<g id="tunnel-below">
+<path id="Rectangle 2" d="M0 0H43C57.3594 0 69 11.6406 69 26V69H0V0Z" fill="#585858"/>
+<path id="Rectangle 1" d="M21 26C21 11.6406 32.6406 0 47 0H50C62.7025 0 73 10.2975 73 23V69H21V26Z" fill="#585858"/>
+<path id="Rectangle 4" d="M30 25C30 13.9543 38.9543 5 50 5V5C61.0457 5 70 13.9543 70 25V69H30V25Z" fill="#272727"/>
+</g>
+<rect id="cover-slip" width="29" height="69" fill="#585858"/>
+</g>
+</svg>

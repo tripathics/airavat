@@ -64,7 +64,6 @@
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
     let url = `http://www.google.com/maps/place/${lat},${lng}`
-    mapEl.setAttribute("src", url)
     document.getElementById('giveLink').innerHTML = `
     <a href="${url}">${url}</a>
     `;

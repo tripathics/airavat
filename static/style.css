@@ -4,9 +4,24 @@
     box-sizing: border-box;
 }
 
+input,
+textarea,
+button,
+select,
+a {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
 :root {
     --nav-height: 4rem;
     --ftr-height: 9.26rem;
+}
+
+@media screen and (max-width: 464px) {
+    :root {
+        --ftr-height: 10.62rem;
+    }
 }
 
 .container {
@@ -15,9 +30,15 @@
     padding: 0 2rem;
 }
 
+@media screen and (max-width: 550px) {
+    .container {
+        padding: 0 1.6rem;
+    }
+}
+
 .section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
 }
 
 body {
@@ -27,7 +48,7 @@ body {
 /* main body */
 .main-main {
     min-height: calc(100vh - var(--nav-height) - var(--ftr-height));
-    padding: 0 0 3.2rem;
+    padding: 0;
 }
 
 .main-main>.container:first-child {
@@ -35,8 +56,14 @@ body {
 }
 
 .page-heading {
+    font-family: 'Zilla Slab', serif;
     text-align: center;
     margin: 0 0 2rem;
+    font-weight: 600;
+}
+
+.section-desc {
+    text-align: justify;
 }
 
 .sub-heading {
@@ -96,6 +123,7 @@ body {
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+
 .form-control:focus {
     color: #495057;
     background-color: #fff;
@@ -169,9 +197,9 @@ button.delete:focus {
     box-shadow: 0 -2px 8px rgb(0 0 0 / 32%);
     position: sticky;
     top: 0;
-    z-index: 120;    
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-    no-repeat url('./media/nav.png');
+    z-index: 120;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+        no-repeat url('./media/nav.png');
     background-position: center center;
     background-size: cover;
 }
@@ -203,10 +231,12 @@ button.delete:focus {
     line-height: 1.1;
     padding: 0.25rem 0.6rem;
 }
+
 .nav-item:hover {
     border: 2px solid #fafafa;
     transition: .5s ease;
 }
+
 .nav-item:hover .nav-link {
     color: #fafafa;
 }
@@ -217,6 +247,7 @@ button.delete:focus {
     height: fit-content;
     border: none;
 }
+
 .brand-logo:hover {
     border: none;
 }
@@ -237,11 +268,13 @@ button.delete:focus {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
+
 @media screen and (max-width: 720px) {
     .location-cards {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 @media screen and (max-width: 550px) {
     .location-cards {
         grid-template-columns: repeat(1, 1fr);
@@ -259,19 +292,32 @@ button.delete:focus {
     color: white;
 }
 
+.location-cards .card h2 {
+    font-family: 'Zilla Slab', serif;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 550px) {
+    .location-cards .card {
+        min-height: 160px;
+    }
+}
+
 .location-cards .card:nth-child(1) {
-    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), 
-    url('./media/hostel.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6)),
+        url('./media/hostel.jpg');
     background-size: cover;
 }
+
 .location-cards .card:nth-child(2) {
-    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), 
-    url('./media/academic_block.jpeg');
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6)),
+        url('./media/academic_block.jpeg');
     background-size: cover;
 }
+
 .location-cards .card:nth-child(3) {
-    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), 
-    url('./media/library_photo.jpeg');
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6)),
+        url('./media/library_photo.jpeg');
     background-size: cover;
 }
 
@@ -352,6 +398,25 @@ button.delete:focus {
     overflow-x: auto;
 }
 
+.edit-bus {
+    display: block;
+}
+
+.edit-bus>svg {
+    height: 1rem;
+    width: 1rem;
+    transition: all 0.2s ease;
+}
+
+.edit-bus>svg:hover {
+    transform: translateY(-0.1rem);
+    transition: all 0.05s ease;
+}
+
+.edit-bus>svg:active {
+    transform: translateY(0.1rem);
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -360,6 +425,14 @@ button.delete:focus {
 
 .table thead th {
     border-bottom: solid 2px #212529;
+    font-family: 'Zilla Slab', serif;
+    font-size: 1.1rem;
+}
+
+.bus-summary th {
+    font-family: 'Zilla Slab', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 .table thead th,
@@ -394,11 +467,17 @@ button.delete:focus {
     text-align: end;
 }
 
+.striped-table tr:nth-child(even) {
+    background-color: #e7e7e780;
+}
+
 .bus-summary {
     font-size: 1.125rem;
     margin: 1rem 0;
 }
-.bus-summary table tr td, .bus-summary table tr th {
+
+.bus-summary table tr td,
+.bus-summary table tr th {
     text-align: left;
     padding: 0.25rem 0;
     padding-right: 1.2rem;
@@ -434,12 +513,14 @@ button.delete:focus {
     padding-top: 1.5rem;
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
 }
 
 .main-footer .ftr-ln a {
     color: #eee;
     text-decoration: none;
 }
+
 .main-footer .ftr-ln a:hover {
     text-decoration: underline;
 }
@@ -447,9 +528,11 @@ button.delete:focus {
 .ftr-ln {
     margin-top: 0.15rem;
 }
+
 .main-footer .copyright {
     padding: 0.8rem 0;
 }
+
 .main-footer .copyright p {
     text-align: center;
     font-size: 0.85rem;
@@ -462,6 +545,110 @@ button.delete:focus {
     position: relative;
     height: 450px;
     width: 100%;
-    max-width: 800px;
     margin: 2rem auto;
+}
+
+.airavat-animate {
+    display: flex;
+    justify-content: center;
+    height: 60%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.airavat-animate p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgb(137, 137, 137);
+}
+
+.airavat-animate svg {
+    height: fit-content;
+    width: 65%;
+}
+
+.airavat-animate #airavat-brand {
+    animation: scaling 1.2s linear infinite;
+}
+
+.airavat-animate #airavat {
+    animation: upanddown 1.2s linear infinite;
+}
+.airavat-animate #wheel1,
+.airavat-animate #wheel2 {
+    animation: rotate 1s linear infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.bus-translate {
+    position: absolute;
+    bottom: var(--ftr-height);
+    animation: slide 5s ease-in-out forwards;
+    left: calc(100% - 256px);
+    height: fit-content;
+    width: 256px;
+}
+
+.tunnel {
+    position: absolute;
+    bottom: var(--ftr-height);
+    height: 69px;
+    left: 0;
+}
+.tunnel.behind {
+    z-index: -1;
+}
+.tunnel.above {
+    z-index: 5;
+}
+
+@keyframes slide {
+    0% {
+        left: calc(100% - 256px);
+    }
+    20% {
+        left: calc(100% - 256px);
+    }
+    90% {
+        left: 0%;
+    }
+    100% {
+        left: -256px;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateZ(-360deg);
+    }
+}
+@keyframes upanddown {
+    0% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(0.05rem);
+    }
+    70% {
+        transform: translateY(0.08rem);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+@keyframes scaling {
+    0% {
+        scale: 1;
+    }
+    70% {
+        scale: 0.998;
+    }
+    100% {
+        scale: 1;
+    }
 }
