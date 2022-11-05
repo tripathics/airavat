@@ -12,15 +12,15 @@ void update_location(), register_network();
 ESP8266WiFiMulti wifi_multi;
 #define BUS_ID "1"
 #define API_KEY "qazsevaqpoi123,azxcv42afpiweqf~faefalkj123"
-#define DOMAIN "http://192.168.254.163:5000"
+#define DOMAIN "http://192.168.137.58:5000"
 
 int network_id = -1;
 const int n_places = 3;
 
 const char *AP[][2] = {
-    {"Hostel", "123454321"},
-    {"Acad", "123454321"},
-    {"Library", "123454321"},
+    {"Hostel", "1234567890"},
+    {"Acad", "1234567890"},
+    {"Library", "1234567890"},
 };
 
 uint16_t connectTimeOutPerAP = 5000;

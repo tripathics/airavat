@@ -565,6 +565,7 @@ button.delete:focus {
 .airavat-animate svg {
     height: fit-content;
     width: 65%;
+    max-width: 350px;
 }
 
 .airavat-animate #airavat-brand {

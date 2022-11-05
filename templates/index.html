@@ -174,7 +174,9 @@
     function InitMap() {
         map = new Microsoft.Maps.Map('#map', {
             credentials: 'AsMbs64J91tX8_k7WZfcLoAi5yMYGksCQ_iVoRp6qg205sV8DWA4pfkm4_BZ6nxf',
-            center: new Microsoft.Maps.Location(27.0845657, 93.59637)
+            center: new Microsoft.Maps.Location(27.042628658412102, 93.44307905022391),
+            mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+            zoom: 16.8
         });
 
         async function fetchCoords() {

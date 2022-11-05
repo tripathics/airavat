@@ -12,7 +12,7 @@
   <select id="busId" type="number" name="bus_id">
     <option value="0">Select bus ID</option>
     {% for id_obj in bus_ids %}
-    <option value="{{ id_obj.id }}">{{ id_obj.id }}</option>
+    <option value="{{ id_obj.id }}">{{ id_obj.id }} {{ id_obj.name }}</option>
     {% endfor %}   
   </select>
   <button id="submit" type="button">
